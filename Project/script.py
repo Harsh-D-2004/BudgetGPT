@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 load_dotenv()
 genai.configure(api_key = os.getenv("GOOGLE_API_KEY"))
-model = ChatGoogleGenerativeAI(model = "gemini-pro", temperatue = 0.3 , max_retries=3)
+model = ChatGoogleGenerativeAI(model = "gemini-pro", temperatue = 0.5 , max_retries=3)
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 UPLOAD_FOLDER = os.path.join(current_dir, 'upload')
@@ -93,6 +93,7 @@ def createVectorStore():
 
     global text_storage
     embeddings = GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
+    embedded_documents = embeddings.embed_documents(text_storage)
     vector_store = FAISS.from_texts(text_storage,embeddings)
     vector_store.save_local("faiss_index")
 
@@ -113,7 +114,7 @@ def get_conversation_chain():
 
     prompt_template = """
     Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
-    provided context just say, "answer is not available in the context", don't provide the wrong answer\n\n
+    provided context just say, "answer is not available in the context", don't provide the wrong answern\n
     Context:\n {context}?\n
     Question: \n{question}\n
 
@@ -141,15 +142,13 @@ def prompt():
     if new_db == None:
         return jsonify({'error': "Deserialization issue"}), 400 
     
-    docs = new_db.similarity_search(prompt)
+    docs = new_db.similarity_search(prompt,k=5,fetch_k=20,distance_metric="cosine",threshold=0.7)
     chain = get_conversation_chain()
 
     response = chain.invoke({"input_documents":docs, "question": prompt})
 
     if response['output_text'] == None or response['output_text'] == "":
         return jsonify({'error': "Response is empty"}), 400
-
-    print(response['output_text'])
 
     return jsonify({'response': response['output_text']}), 200
 
@@ -164,7 +163,7 @@ def exit_application():
 @app.route('/api/prompt/topic' , methods=['GET'])
 def TellTopic():
 
-    TOPIC = "This is a chatbot which is used to chat with Budget of India related questions"
+    TOPIC = "This is a chatbot which is used to chat with Budget of India related questions.Please provide prompt in detail for better responses."
 
     return jsonify({'response': TOPIC}), 200
 
