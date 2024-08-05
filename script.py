@@ -136,6 +136,9 @@ def prompt():
 
     if not prompt:
         return jsonify({'error': 'No prompt provided'}), 400
+    
+    if embeddings == []:
+        return jsonify({'error': 'Upload PDF please'}), 400
 
     new_db = load_faiss_index_safely("faiss_index", embeddings)
 
@@ -163,7 +166,8 @@ def exit_application():
 @app.route('/api/prompt/topic' , methods=['GET'])
 def TellTopic():
 
-    TOPIC = "This is a chatbot which is used to chat with Budget of India related questions.Please provide prompt in detail for better responses."
+    TOPIC = '''This is a chatbot which is used to chat with Budget of India related questions.Please provide prompt in detail for better responses.
+    Start Prompt with Tell me about... or What are.... or Explain... for better results.'''
 
     return jsonify({'response': TOPIC}), 200
 
