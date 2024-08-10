@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from langchain.prompts import PromptTemplate
 import shutil
 from flask import Flask, jsonify, request
+# import requests
 
 app = Flask(__name__)
 
@@ -25,6 +26,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 text_storage = []
 embeddings = []
 global_filepath = ""
+startup_completed = False
 
 def normalize_text(s, sep_token=" \n "):
     s = re.sub(r'\s+', ' ', s).strip()
@@ -170,6 +172,39 @@ def TellTopic():
     Start Prompt with Tell me about... or What are.... or Explain... for better results.'''
 
     return jsonify({'response': TOPIC}), 200
+
+# @app.before_first_request
+# def startup():
+
+#     print("Enter")
+
+#     try:
+
+#         api_requests = [
+#             {
+#                 "url": "http://localhost:5000/api/upload",
+#                 "file_param": "file", 
+#             },
+#         ]
+
+#         for request in api_requests:
+
+#             file = open(os.path.join(app.config['UPLOAD_FOLDER'] , "BudgetGPT_PDF.pdf") , 'rb')
+#             print("file opened")
+#             files = {request['file_param']:file}
+#             print("Loading....")
+#             response = requests.post(request['url'] , files = files)
+
+#             if response.status_code == 200:
+#                 print("File uploaded successfully")
+#             else:
+#                 print("File upload failed") 
+
+#     except Exception as e:
+
+#         print('Error calling API : ' + str(e))
+
+# startup()
 
 if __name__ == '__main__':
     app.run(debug=True)
