@@ -24,20 +24,6 @@
 
 ---
 
-## 📁 Directory Structure
-.
-├── .env
-├── .gitattributes
-├── Procfile
-├── README.md
-├── requirements.txt
-├── script.py
-├── faiss_index
-│ ├── index.faiss
-│ └── index.pkl
-└── upload
-└── BudgetGPT_PDF.pdf
-
 ## 📦 Prerequisites
 
 - Python 3.x
@@ -46,6 +32,8 @@
 - Flask
 - langchain
 - pypdf
+
+---
 
 ## Backend Setup
 - pip install -r requirements.txt
@@ -60,9 +48,13 @@ API Endpoints:
 - /api/exit: Clean up resources and exit.
 - /api/prompt/topic: Get information about the budget topic functionality.
 
+---
+
 ## Frontend Setup
 
 - npm install
 - npm run dev
+
+---
 
 ## Screenshots
