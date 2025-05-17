@@ -36,8 +36,10 @@
 ---
 
 ## Backend Setup
+```bash
 - pip install -r requirements.txt
 - python script.py
+```
 
 Port Information: The Flask application runs on the default port 5000.
 
@@ -51,10 +53,10 @@ API Endpoints:
 ---
 
 ## Frontend Setup
-
+```bash
 - npm install
 - npm run dev
-
+```
 ---
 
 ## Screenshots
