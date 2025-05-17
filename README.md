@@ -51,9 +51,9 @@
 - pip install -r requirements.txt
 - python script.py
 
-- Port Information: The Flask application runs on the default port 5000.
+Port Information: The Flask application runs on the default port 5000.
 
-- API Endpoints:
+API Endpoints:
 
 - /api/upload: Upload PDF files for processing.
 - /api/prompt: Send a prompt to the chatbot.
