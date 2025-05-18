@@ -60,3 +60,7 @@ API Endpoints:
 ---
 
 ## Screenshots
+
+![App Screenshot](./screenshots/Screenshot1.png)
+![App Screenshot](./screenshots/Screenshot2.png)
+![App Screenshot](./screenshots/Screenshot3.png)
